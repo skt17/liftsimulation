@@ -1,0 +1,109 @@
+.lift-container {
+    display: flex;
+    gap: 20px;
+    height: 70px;
+    /* border-top: 2px solid black; */
+    border-bottom: 2px solid black;
+    /* margin: 10px 0; */
+}
+
+.switch-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    margin-right: 20px;
+    width: 5%;
+}
+
+.hidden {
+    background-color: white;
+    border: 0;
+}
+
+.switch {
+    margin: 2px 0;
+}
+
+.on {
+    background-color: green;
+}
+
+#container {
+    display: flex;
+    /* justify-content: center; */
+    /* align-self: center; */
+    /* margin: auto auto; */
+    /* align-items: center; */
+    gap: 10px;
+    padding: 10px;
+    height: 100vh;
+    flex-direction: column;
+    font-family: sans-serif;
+    font-size: 15px;
+    font-style: bold;
+    /* border: 1px solid ; */
+    width: 50%;
+}
+ .flex-container{
+    display: flex;
+    flex-direction: column;
+    gap:3px;
+ }
+input,
+#entry {
+    font-size: 15px;
+    width: 30%;
+}
+
+
+/* #entry{
+    width: 70%;
+    align-self: flex-start;
+} */
+
+.lift {
+    height: 50px;
+    width: 20px;
+    background: none;
+    position: relative;
+    align-self: flex-end;
+
+
+
+}
+
+.lift.active {
+    height: 50px;
+    width: 50px;
+    background: white;
+
+    transition: transform 0.3s ease;
+}
+
+.leftSide,
+.rightSide {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    width: 49%;
+    background-color: orange;
+    transition: width 2.5s;
+
+}
+.rightSide {
+    right: 0;
+  }
+  
+  .leftSide {
+    left: 0;
+    border-right: 1px solid #E8DBBC; 
+  }
+
+  .leftSide.doorOpen,
+.rightSide.doorOpen {
+    width: 0;
+    /* transform: translateX(100%); */
+}
+/* ... (existing CSS styles) ... */
+
+/* Responsive design for phones */
