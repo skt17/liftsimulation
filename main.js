@@ -76,7 +76,7 @@ function callLift(element) {
     if (floorNo > liftFloorMapping[liftToGo]) {
         for (let i = liftFloorMapping[liftToGo]; i <= floorNo; i++) {
 
-            letsGo(i, floorNo, liftToGo, element,-20)
+            letsGo(i, floorNo, liftToGo, element,-70)
             // Delay based on floor difference
         }
     }
@@ -107,7 +107,7 @@ function letsGo(floorNoToGo, finalFloor, liftToGo, element,distanceToMove) {
         if (floorNoToGo == finalFloor) {
             liftFloorMapping = { ...liftFloorMapping, [liftToGo]: finalFloor }
             console.log(liftFloorMapping);
-            elevator.style.transform = 'translateY(0)';
+            // elevator.style.transform = 'translateY(0)';
 
             setTimeout(() => {
                 document.getElementById(`floor-${floorNoToGo}-lift-${liftToGo}-left`).classList.add("doorOpen");
@@ -116,14 +116,16 @@ function letsGo(floorNoToGo, finalFloor, liftToGo, element,distanceToMove) {
                     document.getElementById(`floor-${floorNoToGo}-lift-${liftToGo}-left`).className = "leftSide";
                     document.getElementById(`floor-${floorNoToGo}-lift-${liftToGo}-right`).className = "rightSide";
                     availableLifts.push(liftToGo)
+                    element.classList.remove("on");
 
                 }, 2500);
             }, 3000)
 
 
-            element.classList.remove("on");
 
         } else {
+            elevator.style.transition = 'transform 2s ease-in-out'; // Adjust timing as needed
+
             elevator.style.transform = `translateY(${distanceToMove}px)`;
 
             setTimeout(() => {
