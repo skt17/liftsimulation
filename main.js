@@ -1,10 +1,6 @@
 
 
 let liftFloorMapping = {
-    // "0": "0",
-    // "1": "0",
-    // "2": "0"
-    // // "3": "0",
 
 }
 let availableLifts = [];
@@ -76,18 +72,6 @@ function callLift(element) {
     availableLifts.splice(availableLifts.indexOf(liftToGo), 1)
 
     console.log("available Lifts", availableLifts)
-    // Get the lift object for the requested floor
-    // setTimeout(() => {
-
-    //     // document.getElementById(`floor-${floorNo}-lift-${liftToGo}`).className += " active";
-
-    //     document.getElementById(`floor-${floorNo}-lift-${liftToGo}`).classList.toggle("active")
-    //     liftFloorMapping = { ...liftFloorMapping, [liftToGo]: floorNo }
-    //     console.log(liftFloorMapping);
-    //     element.className = previousUpElementClassName;
-    //     availableLifts.push(liftToGo)
-
-    // }, 3000);
 
     if (floorNo > liftFloorMapping[liftToGo]) {
         for (let i = liftFloorMapping[liftToGo]; i <= floorNo; i++) {
@@ -103,36 +87,9 @@ function callLift(element) {
             // Delay based on floor difference
         }
     }
-    // checkTheWaitingPool();
 }
 
-// function letsGo(floorNoToGo, finalFloor, liftToGo, element) {
-//     setTimeout(() => {
-//         document.getElementById(`floor-${floorNoToGo}-lift-${liftToGo}`).classList.add("active");
-//         document.getElementById(`floor-${floorNoToGo}-lift-${liftToGo}-left`).className = "leftSide"
-//         document.getElementById(`floor-${floorNoToGo}-lift-${liftToGo}-right`).className = "rightSide"
-//         if (floorNoToGo == finalFloor) {
-//             liftFloorMapping = { ...liftFloorMapping, [liftToGo]: finalFloor }
-//             console.log(liftFloorMapping);
-//             availableLifts.push(liftToGo)
-//             element.classList.remove("on");
-//             element.getAttribute('id').disabled=false;
 
-//             document.getElementById(`floor-${floorNoToGo}-lift-${liftToGo}-left`).classList.add("doorOpen")
-//             document.getElementById(`floor-${floorNoToGo}-lift-${liftToGo}-right`).classList.add("doorOpen")
-
-//         }
-//         else {
-//             setTimeout(() => {
-//                 document.getElementById(`floor-${floorNoToGo}-lift-${liftToGo}`).classList.remove("active");
-//                 document.getElementById(`floor-${floorNoToGo}-lift-${liftToGo}-left`).classList.remove("leftSide")
-//                 document.getElementById(`floor-${floorNoToGo}-lift-${liftToGo}-right`).classList.remove("rightSide")
-
-
-//             }, 2000);
-//         }
-//     }, (Math.abs(floorNoToGo - liftFloorMapping[liftToGo])) * 2000);
-// }
 function letsGo(floorNoToGo, finalFloor, liftToGo, element,distanceToMove) {
     setTimeout(() => {
         document.getElementById(`floor-${floorNoToGo}-lift-${liftToGo}`).classList.add("active");
@@ -179,41 +136,6 @@ function letsGo(floorNoToGo, finalFloor, liftToGo, element,distanceToMove) {
         }
     }, (Math.abs(floorNoToGo - liftFloorMapping[liftToGo])) * 2000);
 }
-// function letsGo1(floorNoToGo, finalFloor, liftToGo, element) {
-//     const elevator = document.getElementById(`floor-${floorNoToGo}-lift-${liftToGo}`);
-//     const leftDoor = document.getElementById(`floor-${floorNoToGo}-lift-${liftToGo}-left`);
-//     const rightDoor = document.getElementById(`floor-${floorNoToGo}-lift-${liftToGo}-right`);
-
-//     // Calculate the vertical distance to move the elevator
-//     const distanceToMove = 70; // Adjust the value according to your layout
-
-//     // Apply the transform property to move the elevator
-//     elevator.style.transform = `translateY(${distanceToMove}px)`;
-
-//     // Open the doors when reaching the final floor
-//     if (floorNoToGo === finalFloor) {
-//         // Update liftFloorMapping and reset elevator position
-//         liftFloorMapping = { ...liftFloorMapping, [liftToGo]: finalFloor };
-//         elevator.style.transform = 'translateY(0)';
-
-//         // Add classes for door animations
-//         leftDoor.classList.add('doorOpen');
-//         rightDoor.classList.add('doorOpen');
-
-//         // Remove the classes after the door animation
-//         setTimeout(() => {
-//             leftDoor.classList.remove('doorOpen');
-//             rightDoor.classList.remove('doorOpen');
-//             availableLifts.push(liftToGo);
-//         }, 2500);
-//     } else {
-//         // Remove active class and reset position after animation
-//         setTimeout(() => {
-//             elevator.classList.remove('active');
-//             elevator.style.transform = 'translateY(0)';
-//         }, 2500);
-//     }
-// }
 
 
 document.getElementById("entry").addEventListener('click', () => {
