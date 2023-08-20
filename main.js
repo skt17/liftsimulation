@@ -115,8 +115,10 @@ function letsGo(floorNoToGo, finalFloor, liftToGo, element,distanceToMove) {
                 setTimeout(() => {
                     document.getElementById(`floor-${floorNoToGo}-lift-${liftToGo}-left`).className = "leftSide";
                     document.getElementById(`floor-${floorNoToGo}-lift-${liftToGo}-right`).className = "rightSide";
-                    availableLifts.push(liftToGo)
-                    element.classList.remove("on");
+                    setTimeout(() => {
+                        availableLifts.push(liftToGo)
+                        element.classList.remove("on")},1000)
+
 
                 }, 2500);
             }, 3000)
