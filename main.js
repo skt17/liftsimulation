@@ -147,6 +147,11 @@ document.getElementById("entry").addEventListener('click', () => {
         alert("No. of Floors should be greater than no. of lifts")
         return;
     }
+
+    if (floorToBecreated >10 || liftTobecreated >10){
+        alert("maximum 10 numbers of lifts and floors are allowed")
+        return;
+    }
     document.body.innerHTML = "";
 
     for (let floor = floorToBecreated - 1; floor >= 0; floor--) {
