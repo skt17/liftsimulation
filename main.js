@@ -39,8 +39,9 @@ function registerEvent() {
 function callLift(element) {
     const floorNo = element.getAttribute('id').split("-")[1]
     const previousUpElementClassName = element.className
+    console.log("calling from ", floorNo);
     element.className += " on"
-    element.getAttribute('id').disabled=true;
+    element.getAttribute('id').disabled = true;
     console.log(element.className)
     let liftToGo = availableLifts["0"]
     if (liftToGo === undefined) {
@@ -64,81 +65,70 @@ function callLift(element) {
     console.log(`floor-${liftFloorMapping[liftToGo]}-lift-${liftToGo}`);
 
 
-    // hide existing the lift object 
-    document.getElementById(`floor-${liftFloorMapping[liftToGo]}-lift-${liftToGo}`).className = "lift";
-    document.getElementById(`floor-${liftFloorMapping[liftToGo]}-lift-${liftToGo}-left`).className = ""
-    document.getElementById(`floor-${liftFloorMapping[liftToGo]}-lift-${liftToGo}-right`).className = ""
+    // // hide existing the lift object comment
+    // document.getElementById(`floor-${liftFloorMapping[liftToGo]}-lift-${liftToGo}`).className = "lift";
+    // document.getElementById(`floor-${liftFloorMapping[liftToGo]}-lift-${liftToGo}-left`).className = ""
+    // document.getElementById(`floor-${liftFloorMapping[liftToGo]}-lift-${liftToGo}-right`).className = ""
     // add the lift on onGoing pool
     availableLifts.splice(availableLifts.indexOf(liftToGo), 1)
 
     console.log("available Lifts", availableLifts)
 
-    if (floorNo > liftFloorMapping[liftToGo]) {
-        for (let i = liftFloorMapping[liftToGo]; i <= floorNo; i++) {
+        letsGo(floorNo, liftToGo, element, -71.5)
 
-            letsGo(i, floorNo, liftToGo, element,-70)
-            // Delay based on floor difference
-        }
-    }
-    else {
-        for (let i = liftFloorMapping[liftToGo]; i >= floorNo; i--) {
 
-            letsGo(i, floorNo, liftToGo, element,70)
-            // Delay based on floor difference
-        }
-    }
+
+    // if (floorNo > liftFloorMapping[liftToGo]) {
+    //     for (let i = liftFloorMapping[liftToGo]; i <= floorNo; i++) {
+
+    //         letsGo(i, floorNo, liftToGo, element,-70)
+    //         // Delay based on floor difference
+    //     }
+    // }
+    // else {
+    //     for (let i = liftFloorMapping[liftToGo]; i >= floorNo; i--) {
+
+    //         letsGo(i, floorNo, liftToGo, element,70)
+    //         // Delay based on floor difference
+    //     }
+    // }
 }
 
 
-function letsGo(floorNoToGo, finalFloor, liftToGo, element,distanceToMove) {
+
+function letsGo(finalFloor, liftToGo, element, distanceToMove) {
+    const elevator = document.getElementById(`lift-${liftToGo}`);
+
+    console.log("elevator", `lift-${liftToGo}`);
+    console.log("finalFloor", finalFloor);
+
+    elevator.style.transition = `transform ${Math.abs(finalFloor - liftFloorMapping[liftToGo])}s ease-in-out`; // Adjust timing as needed
+
+    elevator.style.transform = `translateY(${distanceToMove * Math.abs(finalFloor)}px)`;
+
+
+    console.log(liftFloorMapping);
+
     setTimeout(() => {
-        document.getElementById(`floor-${floorNoToGo}-lift-${liftToGo}`).classList.add("active");
-        document.getElementById(`floor-${floorNoToGo}-lift-${liftToGo}-left`).className = "leftSide";
-        document.getElementById(`floor-${floorNoToGo}-lift-${liftToGo}-right`).className = "rightSide";
-        const elevator = document.getElementById(`floor-${floorNoToGo}-lift-${liftToGo}`);
-        const leftDoor = document.getElementById(`floor-${floorNoToGo}-lift-${liftToGo}-left`);
-        const rightDoor = document.getElementById(`floor-${floorNoToGo}-lift-${liftToGo}-right`);
+    
+        const leftDoor = document.getElementById(`lift-${liftToGo}-left`);
+        const rightDoor = document.getElementById(`lift-${liftToGo}-right`);
 
-        // Calculate the vertical distance to move the elevator
-         // Adjust the value according to your layout
-         distanceToMove =floorNoToGo === finalFloor?0:distanceToMove
-        // Apply the transform property to move the elevator
+        liftFloorMapping = { ...liftFloorMapping, [liftToGo]: finalFloor }
+        document.getElementById(`lift-${liftToGo}-left`).classList.add("doorOpen");
+        document.getElementById(`lift-${liftToGo}-right`).classList.add("doorOpen");
 
-        if (floorNoToGo == finalFloor) {
-            liftFloorMapping = { ...liftFloorMapping, [liftToGo]: finalFloor }
-            console.log(liftFloorMapping);
-            // elevator.style.transform = 'translateY(0)';
-
+        setTimeout(() => {
+            document.getElementById(`lift-${liftToGo}-left`).className = "leftSide";
+            document.getElementById(`lift-${liftToGo}-right`).className = "rightSide";
             setTimeout(() => {
-                document.getElementById(`floor-${floorNoToGo}-lift-${liftToGo}-left`).classList.add("doorOpen");
-                document.getElementById(`floor-${floorNoToGo}-lift-${liftToGo}-right`).classList.add("doorOpen");
-                setTimeout(() => {
-                    document.getElementById(`floor-${floorNoToGo}-lift-${liftToGo}-left`).className = "leftSide";
-                    document.getElementById(`floor-${floorNoToGo}-lift-${liftToGo}-right`).className = "rightSide";
-                    setTimeout(() => {
-                        availableLifts.push(liftToGo)
-                        element.classList.remove("on")},1000)
+                availableLifts.push(liftToGo)
+                element.classList.remove("on")
+            }, 1000)
 
 
-                }, 2500);
-            }, 3000)
-
-
-
-        } else {
-            elevator.style.transition = 'transform 2s ease-in-out'; // Adjust timing as needed
-
-            elevator.style.transform = `translateY(${distanceToMove}px)`;
-
-            setTimeout(() => {
-                document.getElementById(`floor-${floorNoToGo}-lift-${liftToGo}`).classList.remove("active");
-                elevator.style.transform = 'translateY(0)';
-
-                document.getElementById(`floor-${floorNoToGo}-lift-${liftToGo}-left`).classList.remove("leftSide");
-                document.getElementById(`floor-${floorNoToGo}-lift-${liftToGo}-right`).classList.remove("rightSide");
-            }, 2500);
-        }
-    }, (Math.abs(floorNoToGo - liftFloorMapping[liftToGo])) * 2000);
+        }, 2500);
+    }, Math.abs(finalFloor - liftFloorMapping[liftToGo]) * 1000)
 }
 
 
@@ -147,10 +137,10 @@ document.getElementById("entry").addEventListener('click', () => {
 
     let floorToBecreated = parseInt(document.getElementById("floor-no").value)
     let liftTobecreated = parseInt(document.getElementById("lift-no").value)
-    console.log("hi",floorToBecreated*liftTobecreated)
-    if(floorToBecreated<=0 || liftTobecreated<=0){
+    console.log("hi", floorToBecreated * liftTobecreated)
+    if (floorToBecreated <= 0 || liftTobecreated <= 0) {
         alert("Enter a valid input")
-return
+        return
     }
     document.body.innerHTML = "";
 
@@ -188,30 +178,31 @@ return
 
         // Create lift divs
 
+        if (floor === 0) {
+
+            for (let i = 0; i < liftTobecreated; i++) {
+                const liftDiv = document.createElement('div');
+                liftDiv.classList.add('lift');
+                const leftSide = document.createElement('div');
+                leftSide.id = `lift-${i}-left`
+
+                const rightSide = document.createElement('div');
+                rightSide.id = `lift-${i}-right`
+                if (floor == 0) {
+                    leftSide.classList.add('leftSide')
+                    rightSide.classList.add('rightSide');
 
 
-        for (let i = 0; i < liftTobecreated; i++) {
-            const liftDiv = document.createElement('div');
-            liftDiv.classList.add('lift');
-            const leftSide = document.createElement('div');
-            leftSide.id = `floor-${floor}-lift-${i}-left`
-
-            const rightSide = document.createElement('div');
-            rightSide.id = `floor-${floor}-lift-${i}-right`
-            if (floor == 0) {
+                }
                 liftDiv.classList.add('active');
-                leftSide.classList.add('leftSide')
-                rightSide.classList.add('rightSide');
 
-
+                liftDiv.id = `lift-${i}`;
+                liftDiv.appendChild(leftSide.cloneNode(true));
+                liftDiv.appendChild(rightSide.cloneNode(true))
+                // console.log(liftDiv)
+                liftContainer.appendChild(liftDiv);
             }
-            liftDiv.id = `floor-${floor}-lift-${i}`;
-            liftDiv.appendChild(leftSide.cloneNode(true));
-            liftDiv.appendChild(rightSide.cloneNode(true))
-            // console.log(liftDiv)
-            liftContainer.appendChild(liftDiv);
         }
-
         // Append lift container to the document body
         document.body.appendChild(liftContainer);
     }
@@ -229,9 +220,9 @@ function doLiftFloorMapping(liftTobecreated) {
     }
 }
 setInterval(
-function checkTheWaitingPool() {
-    waitingPool.map((element, index) => {
-        callLift(element)
-        waitingPool.splice(index, 1)
-    })
-},200)
+    function checkTheWaitingPool() {
+        waitingPool.map((element, index) => {
+            callLift(element)
+            waitingPool.splice(index, 1)
+        })
+    }, 200)

@@ -64,7 +64,7 @@ input,
 .lift {
     height: 70px;
     width: 50px;
-    background: none;
+    /* background: none; */
     position: relative;
     align-self: flex-end;
 
@@ -75,7 +75,6 @@ input,
 .lift.active {
     height: 70px;
     width: 50px;
-    background: white;
 
     transition: transform 0.3s ease;
 }
