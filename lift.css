@@ -100,7 +100,7 @@ input,
 
   .leftSide.doorOpen,
 .rightSide.doorOpen {
-    width: 0;
+    width: 5px;
     /* transform: translateX(100%); */
 }
 /* ... (existing CSS styles) ... */

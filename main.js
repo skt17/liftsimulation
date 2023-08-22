@@ -102,7 +102,7 @@ function letsGo(finalFloor, liftToGo, element, distanceToMove) {
     console.log("elevator", `lift-${liftToGo}`);
     console.log("finalFloor", finalFloor);
 
-    elevator.style.transition = `transform ${Math.abs(finalFloor - liftFloorMapping[liftToGo])}s ease-in-out`; // Adjust timing as needed
+    elevator.style.transition = `transform ${Math.abs(finalFloor - liftFloorMapping[liftToGo])*2}s ease-in-out`; // Adjust timing as needed
 
     elevator.style.transform = `translateY(${distanceToMove * Math.abs(finalFloor)}px)`;
 
@@ -128,7 +128,7 @@ function letsGo(finalFloor, liftToGo, element, distanceToMove) {
 
 
         }, 2500);
-    }, Math.abs(finalFloor - liftFloorMapping[liftToGo]) * 1000)
+    }, Math.abs(finalFloor - liftFloorMapping[liftToGo])*2 * 1000)
 }
 
 
@@ -137,10 +137,15 @@ document.getElementById("entry").addEventListener('click', () => {
 
     let floorToBecreated = parseInt(document.getElementById("floor-no").value)
     let liftTobecreated = parseInt(document.getElementById("lift-no").value)
-    console.log("hi", floorToBecreated * liftTobecreated)
-    if (floorToBecreated <= 0 || liftTobecreated <= 0) {
+    // console.log("hi",  * liftTobecreated)
+
+    if (floorToBecreated <= 0 || liftTobecreated <= 0 ||isNaN(floorToBecreated * liftTobecreated)) {
         alert("Enter a valid input")
         return
+    }
+    if(floorToBecreated<liftTobecreated){
+        alert("No. of Floors should be greater than no. of lifts")
+        return;
     }
     document.body.innerHTML = "";
 
